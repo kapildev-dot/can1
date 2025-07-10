@@ -7,1222 +7,951 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #ff6b6b;    /* Vibrant Coral */
-            --secondary-color: #48cae4;  /* Sky Blue */
-            --accent-color: #ffd60a;     /* Bright Yellow */
-            --dark-color: #03045e;      /* Deep Navy */
-            --light-color: #faf4ed;     /* Creamy White */
-            --success-color: #06d6a0;   /* Teal Green */
-            --danger-color: #ef476f;    /* Hot Pink */
-            --shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--light-color);
-            color: var(--dark-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-            padding-bottom: 70px; /* For fixed footer */
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            padding: 2.5rem 1rem;
-            text-align: center;
-            position: relative;
-            color: white;
-            animation: fadeInDown 0.8s ease-out;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, 
-                          rgba(255, 107, 107, 0.8), 
-                          rgba(72, 202, 228, 0.8));
-            z-index: -1;
-        }
-
-        header h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transform: perspective(500px) rotateX(10deg);
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-top: 0.5rem;
-            animation: fadeIn 1.2s ease 0.3s both;
-        }
-
-        /* Navigation */
-        nav {
-            background: var(--dark-color);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        nav button {
-            background: var(--accent-color);
-            color: var(--dark-color);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        nav button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
-        }
-
-        nav button:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        nav button:hover::after {
-            transform: translateY(0);
-        }
-
-        nav button i {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
-
-        nav button:hover i {
-            transform: rotate(10deg);
-        }
-
-        /* Sections */
-        section {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            position: relative;
-            overflow: hidden;
-        }
-
-        section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
-            transition: width 0.5s ease;
-        }
-
-        section.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        section.active::before {
-            width: 100%;
-            opacity: 0.05;
-        }
-
-        /* Home Section */
-        #home {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: clamp(4rem, 12vw, 8rem) 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 70vh;
-        }
-
-        #home h2 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            margin-bottom: 1.5rem;
-            animation: bounceIn 1s ease both;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        #home p {
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            animation: fadeIn 1.5s ease 0.5s both;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .cta-button {
-            background: var(--accent-color);
-            color: var(--dark-color);
-            padding: 1rem 2.5rem;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            animation: pulse 2s infinite 1.5s;
-        }
-
-        .cta-button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(255, 255, 255, 0.3), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.4s ease;
-        }
-
-        .cta-button:hover {
-            background: var(--secondary-color);
-            color: white;
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            animation: none;
-        }
-
-        .cta-button:hover::after {
-            transform: translateX(100%);
-        }
-
-        /* Menu Section */
-        #menu h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
-            animation: fadeIn 0.8s ease both;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        #menu h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            border-radius: 3px;
-            transform: scaleX(0);
-            transform-origin: left;
-            animation: scaleIn 0.8s ease 0.3s forwards;
-        }
-
-        #customer-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            background: var(--light-color);
-            padding: 1.5rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
-            animation: slideUp 0.8s ease both;
-        }
-
-        #customer-details label {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--dark-color);
-        }
-
-        #customer-details input, #customer-details textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            transition: var(--transition);
-            font-family: 'Poppins', sans-serif;
-            background: white;
-        }
-
-        #customer-details textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        #customer-details input:focus, #customer-details textarea:focus {
-            border-color: var(--secondary-color);
-            outline: none;
-            box-shadow: 0 0 15px rgba(72, 202, 228, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .menu-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .menu-item {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            transform-style: preserve-3d;
-        }
-
-        .menu-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(72, 202, 228, 0.1));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .menu-item:hover::before {
-            opacity: 1;
-        }
-
-        .menu-item img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .menu-item:hover img {
-            transform: scale(1.05) rotate(1deg);
-        }
-
-        .menu-item-content {
-            padding: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .menu-item h3 {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.4rem;
-            color: var(--primary-color);
-        }
-
-        .menu-item p {
-            color: #555;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .menu-item-price {
-            color: var(--secondary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .menu-item-price::before {
-            content: '₹';
-            font-size: 1rem;
-        }
-
-        .add-to-cart {
-            width: 100%;
-            background: var(--secondary-color);
-            color: white;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .add-to-cart::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .add-to-cart:hover {
-            background: var(--primary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(239, 71, 111, 0.4);
-        }
-
-        .add-to-cart:hover::before {
-            left: 100%;
-        }
-
-        .add-to-cart.pulse {
-            animation: cartPulse 0.5s;
-        }
-
-        /* Cart */
-        .cart {
-            background: var(--light-color);
-            padding: 1.5rem;
-            border-radius: 15px;
-            position: sticky;
-            top: 5rem;
-            height: fit-content;
-            box-shadow: var(--shadow);
-            animation: slideInRight 0.8s ease both;
-        }
-
-        .cart h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-        }
-
-        #cart-items {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-            scrollbar-width: thin;
-            scrollbar-color: var(--secondary-color) var(--light-color);
-        }
-
-        #cart-items::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        #cart-items::-webkit-scrollbar-track {
-            background: var(--light-color);
-        }
-
-        #cart-items::-webkit-scrollbar-thumb {
-            background-color: var(--secondary-color);
-            border-radius: 6px;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem;
-            border-bottom: 1px solid #eee;
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            animation: slideIn 0.3s ease;
-            transition: var(--transition);
-        }
-
-        .cart-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .quantity-btn {
-            width: 28px;
-            height: 28px;
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .quantity-btn:hover {
-            background: var(--primary-color);
-            transform: scale(1.1);
-        }
-
-        .cart-total {
-            font-weight: 600;
-            margin: 1rem 0;
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.2rem;
-            color: var(--dark-color);
-            padding: 0.8rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        .cart-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .cart-actions button {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cart-actions button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
-        }
-
-        .cart-actions button:hover::after {
-            transform: translateY(0);
-        }
-
-        #place-order {
-            background: var(--success-color);
-        }
-
-        #place-order:hover {
-            background: #05b586;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(6, 214, 160, 0.4);
-        }
-
-        #clear-cart {
-            background: var(--danger-color);
-        }
-
-        #clear-cart:hover {
-            background: #d64161;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(239, 71, 111, 0.4);
-        }
-
-        /* Contact Section */
-        #contact h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
-            animation: fadeIn 0.8s ease both;
-        }
-
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .contact-card {
-            background: var(--light-color);
-            padding: 1.5rem;
-            border-radius: 15px;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-            animation: fadeIn 0.8s ease both;
-            animation-delay: calc(var(--order) * 0.2s);
-        }
-
-        .contact-card:hover {
-            transform: translateY(-5px) rotate(1deg);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .contact-card h3 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.4rem;
-        }
-
-        .contact-card p {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-color);
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-        }
-
-        footer i {
-            color: var(--accent-color);
-            animation: pulse 1.5s infinite;
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            background: var(--success-color);
-            color: white;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            z-index: 1000;
-            transform: translateX(150%);
-            transition: transform 0.4s ease;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.error {
-            background: var(--danger-color);
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes bounceIn {
-            0% { opacity: 0; transform: scale(0.3) translateY(20px); }
-            50% { opacity: 1; transform: scale(1.05); }
-            70% { transform: scale(0.95); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes cartPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes scaleIn {
-            from { transform: scaleX(0); }
-            to { transform: scaleX(1); }
-        }
-
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .menu-container {
-                grid-template-columns: 1fr;
-            }
-            .cart {
-                position: static;
-                margin-top: 2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .menu-grid {
-                grid-template-columns: 1fr;
-            }
-            .nav-container {
-                gap: 0.8rem;
-            }
-            nav button {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            section {
-                margin: 1rem;
-                padding: 1rem;
-            }
-            .cart-actions {
-                flex-direction: column;
-            }
-            header h1 {
-                font-size: 1.8rem;
-            }
-            #home {
-                padding: 3rem 1rem;
-            }
-            .cta-button {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
-            }
-        }
+     /* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Body styling */
+body {
+    background: linear-gradient(180deg, #fef9f3 0%, #f8e8d6 100%);
+    color: #2e1e0f;
+    line-height: 1.6;
+}
+
+/* Header styling */
+header {
+    background: linear-gradient(135deg, #a67c00 0%, #704f1a 100%);
+    color: #fff;
+    text-align: center;
+    padding: 3rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    font-size: 1.3rem;
+    font-style: italic;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+/* Navigation styling */
+nav {
+    background: #4a3728;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+nav button {
+    background: #fff;
+    color: #4a3728;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+nav button:hover {
+    background: #f4c107;
+    color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Section styling */
+section {
+    display: none;
+    padding: 3rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+section.active {
+    display: block;
+}
+
+/* Home section */
+#home {
+    background: #fff;
+    border-radius: 15px;
+    padding: 4rem;
+    text-align: center;
+    margin: 2rem auto;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+#home h2 {
+    color: #704f1a;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: fadeIn 1s ease-in;
+}
+
+#home p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    background: #f4c107;
+    color: #fff;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cta-button:hover {
+    background: #d9a404;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Menu section */
+#menu {
+    background: #fdf6e9;
+    border-radius: 15px;
+    padding: 4rem;
+    margin: 2rem auto;
+}
+
+#menu h2 {
+    color: #4a3728;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    animation: slideIn 0.8s ease-out;
+}
+
+#customer-details {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#customer-details div {
+    margin-bottom: 1.5rem;
+}
+
+#customer-details label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #704f1a;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+#customer-details input,
+#customer-details textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #e0d7c3;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+#customer-details input:focus,
+#customer-details textarea:focus {
+    border-color: #f4c107;
+    outline: none;
+    box-shadow: 0 0 5px rgba(244, 193, 7, 0.3);
+}
+
+#customer-details textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.menu-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.menu-grid {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.menu-item {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 3px solid #f4c107;
+}
+
+.menu-item-content {
+    padding: 1.5rem;
+}
+
+.menu-item h3 {
+    color: #4a3728;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.menu-item p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.menu-item-price {
+    color: #f4c107;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.add-to-cart {
+    background: #704f1a;
+    color: #fff;
+    border: none;
+    padding: 0.9rem;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background: #8b5e3c;
+    transform: scale(1.02);
+}
+
+.cart {
+    flex: 1;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart h3 {
+    color: #4a3728;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.cart-total {
+    margin: 1.5rem 0;
+    font-weight: 700;
+    color: #704f1a;
+    font-size: 1.2rem;
+}
+
+.cart-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.cart-actions button {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#place-order {
+    background: #f4c107;
+    color: #fff;
+}
+
+#place-order:hover {
+    background: #d9a404;
+    transform: translateY(-2px);
+}
+
+#clear-cart {
+    background: #e0d7c3;
+    color: #4a3728;
+}
+
+#clear-cart:hover {
+    background: #d1c4a8;
+    transform: translateY(-2px);
+}
+
+/* Contact section */
+#contact {
+    background: #fff;
+    border-radius: 15px;
+    padding: 4rem;
+    margin: 2rem auto;
+}
+
+#contact h2 {
+    color: #4a3728;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.contact-card {
+    background: #fdf6e9;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+}
+
+.contact-card h3 {
+    color: #704f1a;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.contact-card p {
+    margin: 0.7rem 0;
+    font-size: 1.1rem;
+}
+
+/* Footer styling */
+footer {
+    background: #4a3728;
+    color: #fff;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    font-size: 1rem;
+}
+
+/* Notification styling */
+.notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #f4c107;
+    color: #fff;
+    padding: 1.2rem 2rem;
+    border-radius: 8px;
+    display: none;
+    align-items: center;
+    gap: 0.7rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: slideInRight 0.5s ease;
+}
+
+.notification.active {
+    display: flex;
+}
+
+/* Pop-up for form validation */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1000;
+    animation: popIn 0.3s ease;
+}
+
+.popup.active {
+    display: flex;
+}
+
+.popup p {
+    color: #d32f2f;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.popup button {
+    background: #f4c107;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.popup button:hover {
+    background: #d9a404;
+}
+
+/* Overlay for pop-up */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 999;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* Icon styling */
+[class*="icon-"]::before {
+    margin-right: 0.6rem;
+    font-size: 1.2rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes popIn {
+    from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .nav-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav button {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .menu-container {
+        flex-direction: column;
+    }
+
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+
+    #home, #menu, #contact {
+        padding: 2rem;
+    }
+}
+
     </style>
 </head>
 <body>
-    <header>
-        <h1><i class="fas fa-mug-hot"></i> Kashyap Cafe</h1>
-        <p>Where Flavor Meets Comfort</p>
-    </header>
+  <header>
+    <h1><i class="icon-cafe"></i> Kashyap Cafe</h1>
+    <p>Where Flavor Meets Comfort</p>
+  </header>
 
-    <nav>
-        <div class="nav-container">
-            <button onclick="showSection('home')"><i class="fas fa-home"></i> Home</button>
-            <button onclick="showSection('menu')"><i class="fas fa-utensils"></i> Menu</button>
-            <button onclick="showSection('contact')"><i class="fas fa-phone"></i> Contact</button>
-        </div>
-    </nav>
+  <nav>
+    <div class="nav-container">
+      <button onclick="showSection('home')"><i class="icon-home"></i> Home</button>
+      <button onclick="showSection('menu')"><i class="icon-menu"></i> Menu</button>
+      <button onclick="showSection('contact')"><i class="icon-contact"></i> Contact</button>
+    </div>
+  </nav>
 
-    <section id="home" class="active">
-        <h2>Welcome to Kashyap Cafe</h2>
-        <p>Savor the taste of freshly brewed coffee and delicious meals, delivered to your doorstep with love!</p>
-        <button class="cta-button" onclick="showSection('menu')"><i class="fas fa-shopping-cart"></i> Order Now</button>
-    </section>
+  <section id="home" class="active">
+    <h2>Welcome to Kashyap Cafe</h2>
+    <p>Savor the taste of freshly brewed coffee and delicious meals, delivered to your doorstep with love!</p>
+    <button class="cta-button" onclick="showSection('menu')"><i class="icon-cart"></i> Order Now</button>
+  </section>
 
-    <section id="menu">
-        <h2><i class="fas fa-book-open"></i> Our Menu</h2>
-        <div id="customer-details">
-            <div>
-                <label><i class="fas fa-user"></i> Name</label>
-                <input type="text" id="customer-name" placeholder="Enter your full name" required>
-            </div>
-            <div>
-                <label><i class="fas fa-phone"></i> Mobile Number</label>
-                <input type="tel" id="mobile-number" placeholder="Enter 10-digit number" pattern="[0-9]{10}" required>
-            </div>
-            <div>
-                <label><i class="fas fa-envelope"></i> Email</label>
-                <input type="email" id="email" placeholder="Enter your email" required>
-            </div>
-            <div>
-                <label><i class="fas fa-map-marker-alt"></i> Delivery Address</label>
-                <textarea id="address" placeholder="Enter your complete address" required></textarea>
-            </div>
-        </div>
+  <section id="menu">
+    <h2><i class="icon-book"></i> Our Menu</h2>
 
-        <div class="menu-container">
-            <div class="menu-grid">
-                <div class="menu-item">
-                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" alt="Burger">
-                    <div class="menu-item-content">
-                        <h3><i class="fas fa-hamburger"></i> Classic Burger</h3>
-                        <p>Juicy patty with fresh veggies and sauce</p>
-                        <div class="menu-item-price">99</div>
-                        <button class="add-to-cart" data-item="Classic Burger" data-price="99"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                    </div>
-                </div>
-                <div class="menu-item">
-                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="Pizza">
-                    <div class="menu-item-content">
-                        <h3><i class="fas fa-pizza-slice"></i> Margherita Pizza</h3>
-                        <p>Fresh tomatoes, mozzarella, and basil</p>
-                        <div class="menu-item-price">199</div>
-                        <button class="add-to-cart" data-item="Margherita Pizza" data-price="199"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                    </div>
-                </div>
-               
-                </div>
-                <div class="menu-item">
-                    <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5" alt="Fries">
-                    <div class="menu-item-content">
-                        <h3><i class="fas fa-hotdog"></i> French Fries</h3>
-                        <p>Crispy golden fries with seasoning</p>
-                        <div class="menu-item-price">89</div>
-                        <button class="add-to-cart" data-item="French Fries" data-price="89"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                    </div>
-                </div>
-                
-                <!-- New Items Added Here -->
-                <div class="menu-item">
-                    <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb" alt="Macaroni">
-                    <div class="menu-item-content">
-                        <h3><i class="fas fa-cheese"></i> Cheesy Macaroni</h3>
-                        <p>Creamy macaroni with three cheese blend</p>
-                        <div class="menu-item-price">149</div>
-                        <button class="add-to-cart" data-item="Cheesy Macaroni" data-price="149"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb" alt="Pasta">
-                    <div class="menu-item-content">
-                        <h3><i class="fas fa-pasta"></i> White Sauce Pasta</h3>
-                        <p>Penne pasta in creamy white sauce with herbs</p>
-                        <div class="menu-item-price">179</div>
-                        <button class="add-to-cart" data-item="White Sauce Pasta" data-price="179"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950" alt="Samosa">
-                    <div class="menu-item-content">
-                        <h3><i class="fas fa-drumstick-bite"></i> Punjabi Samosa</h3>
-                        <p>Crispy samosa with spiced potato filling</p>
-                        <div class="menu-item-price">49</div>
-                        <button class="add-to-cart" data-item="Punjabi Samosa" data-price="49"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a" alt="Kulcha">
-                    <div class="menu-item-content">
-                        <h3><i class="fas fa-bread-slice"></i> Amritsari Kulcha</h3>
-                        <p>Soft kulcha stuffed with spiced potatoes</p>
-                        <div class="menu-item-price">89</div>
-                        <button class="add-to-cart" data-item="Amritsari Kulcha" data-price="89"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                    </div>
-                </div>
-
-                
-            <div class="cart">
-                <h3><i class="fas fa-shopping-cart"></i> Your Order</h3>
-                <div id="cart-items"></div>
-                <div class="cart-total">Total: ₹<span id="total-price">0</span></div>
-                <div class="cart-actions">
-                    <button id="place-order"><i class="fas fa-paper-plane"></i> Place Order</button>
-                    <button id="clear-cart"><i class="fas fa-trash"></i> Clear Cart</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <h2><i class="fas fa-headset"></i> Get in Touch</h2>
-        <div class="contact-container">
-            <div class="contact-card" style="--order: 1">
-                <h3><i class="fas fa-store"></i> Visit Us</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Moh kassaban,sarsawa 247232</p>
-                <p><i class="fas fa-clock"></i> Open: 9 AM - 10 PM Daily</p>
-            </div>
-            <div class="contact-card" style="--order: 2">
-                <h3><i class="fas fa-phone-alt"></i> Contact Us</h3>
-                <p><i class="fas fa-phone"></i> +91 8384806501</p>
-                <p><i class="fas fa-envelope"></i> kapish182005@gmail.com</p>
-                <p><i class="fab fa-whatsapp"></i> +91 8384806501</p>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2025 Kashyap Cafe | Brewed with <i class="fas fa-heart"></i> for You</p>
-    </footer>
-
-    <div id="notification" class="notification">
-        <i class="fas fa-check-circle"></i>
-        <span id="notification-message">Notification message here</span>
+    <div id="customer-details">
+      <div>
+        <label><i class="icon-user"></i> Name</label>
+        <input type="text" id="customer-name" placeholder="Enter your full name" required>
+      </div>
+      <div>
+        <label><i class="icon-phone"></i> Mobile Number</label>
+        <input type="tel" id="mobile-number" placeholder="Enter 10-digit number" pattern="[0-9]{10}" required>
+      </div>
+      <div>
+        <label><i class="icon-email"></i> Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+      <div>
+        <label><i class="icon-address"></i> Delivery Address</label>
+        <textarea id="address" placeholder="Enter your complete address" required></textarea>
+      </div>
     </div>
 
+    <div class="menu-container">
+      <div class="menu-grid">
+
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" alt="Burger">
+          <div class="menu-item-content">
+            <h3><i class="icon-burger"></i> Classic Burger</h3>
+            <p>Juicy patty with fresh veggies and sauce</p>
+            <div class="menu-item-price">99</div>
+            <button class="add-to-cart" data-item="Classic Burger" data-price="99"><i class="icon-cart-add"></i> Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="Pizza">
+          <div class="menu-item-content">
+            <h3><i class="icon-pizza"></i> Margherita Pizza</h3>
+            <p>Fresh tomatoes, mozzarella, and basil</p>
+            <div class="menu-item-price">199</div>
+            <button class="add-to-cart" data-item="Margherita Pizza" data-price="199"><i class="icon-cart-add"></i> Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5" alt="Fries">
+          <div class="menu-item-content">
+            <h3><i class="icon-fries"></i> French Fries</h3>
+            <p>Crispy golden fries with seasoning</p>
+            <div class="menu-item-price">89</div>
+            <button class="add-to-cart" data-item="French Fries" data-price="89"><i class="icon-cart-add"></i> Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb" alt="Macaroni">
+          <div class="menu-item-content">
+            <h3><i class="icon-mac"></i> Cheesy Macaroni</h3>
+            <p>Creamy macaroni with three cheese blend</p>
+            <div class="menu-item-price">149</div>
+            <button class="add-to-cart" data-item="Cheesy Macaroni" data-price="149"><i class="icon-cart-add"></i> Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb" alt="Pasta">
+          <div class="menu-item-content">
+            <h3><i class="icon-pasta"></i> White Sauce Pasta</h3>
+            <p>Penne pasta in creamy white sauce with herbs</p>
+            <div class="menu-item-price">179</div>
+            <button class="add-to-cart" data-item="White Sauce Pasta" data-price="179"><i class="icon-cart-add"></i> Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950" alt="Samosa">
+          <div class="menu-item-content">
+            <h3><i class="icon-samosa"></i> Punjabi Samosa</h3>
+            <p>Crispy samosa with spiced potato filling</p>
+            <div class="menu-item-price">49</div>
+            <button class="add-to-cart" data-item="Punjabi Samosa" data-price="49"><i class="icon-cart-add"></i> Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a" alt="Kulcha">
+          <div class="menu-item-content">
+            <h3><i class="icon-kulcha"></i> Amritsari Kulcha</h3>
+            <p>Soft kulcha stuffed with spiced potatoes</p>
+            <div class="menu-item-price">89</div>
+            <button class="add-to-cart" data-item="Amritsari Kulcha" data-price="89"><i class="icon-cart-add"></i> Add to Cart</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="cart">
+        <h3><i class="icon-cart"></i> Your Order</h3>
+        <div id="cart-items"></div>
+        <div class="cart-total">Total: ₹<span id="total-price">0</span></div>
+        <div class="cart-actions">
+          <button id="place-order"><i class="icon-send"></i> Place Order</button>
+          <button id="clear-cart"><i class="icon-trash"></i> Clear Cart</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2><i class="icon-support"></i> Get in Touch</h2>
+    <div class="contact-container">
+      <div class="contact-card" style="--order: 1">
+        <h3><i class="icon-visit"></i> Visit Us</h3>
+        <p><i class="icon-location"></i> Moh kassaban, Sarsawa 247232</p>
+        <p><i class="icon-clock"></i> Open: 9 AM - 10 PM Daily</p>
+      </div>
+      <div class="contact-card" style="--order: 2">
+        <h3><i class="icon-phone-call"></i> Contact Us</h3>
+        <p><i class="icon-phone"></i> +91 8384806501</p>
+        <p><i class="icon-email"></i> kapish182005@gmail.com</p>
+        <p><i class="icon-whatsapp"></i> +91 8384806501</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Kashyap Cafe | Brewed with <i class="icon-heart"></i> for You</p>
+  </footer>
+
+  <div id="notification" class="notification">
+    <i class="icon-check"></i>
+    <span id="notification-message">Notification message here</span>
+  </div>
+</body>
+
     <script>
-        // Section Navigation
-        function showSection(sectionId) {
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active');
+     function showSection(sectionId) {
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('active');
+    });
+    const targetSection = document.getElementById(sectionId);
+    targetSection.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Add animation class to menu items when menu section is shown
+    if (sectionId === 'menu') {
+        setTimeout(() => {
+            document.querySelectorAll('.menu-item').forEach((item, index) => {
+                item.style.animation = `slideUp 0.6s ease ${index * 0.1}s both`;
             });
-            const targetSection = document.getElementById(sectionId);
-            targetSection.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Add animation class to menu items when menu section is shown
-            if (sectionId === 'menu') {
-                setTimeout(() => {
-                    document.querySelectorAll('.menu-item').forEach((item, index) => {
-                        item.style.animation = `slideUp 0.6s ease ${index * 0.1}s both`;
-                    });
-                }, 100);
-            }
+        }, 100);
+    }
+}
+
+// Pop-up for form validation
+function showPopup(message) {
+    const popup = document.createElement('div');
+    popup.className = 'popup active';
+    popup.innerHTML = `
+        <p>${message}</p>
+        <button onclick="this.parentElement.remove(); document.querySelector('.overlay').remove();">OK</button>
+    `;
+    document.body.appendChild(popup);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay active';
+    document.body.appendChild(overlay);
+}
+
+// Notification system
+function showNotification(message, isError = false) {
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notification-message');
+    
+    notificationMessage.textContent = message;
+    notification.classList.toggle('error', isError);
+    notification.classList.add('show');
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3000);
+}
+
+// Cart Management
+let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+function updateCartDisplay() {
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    for (const [item, details] of Object.entries(cart)) {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+            <span>${item} - ₹${details.price} × ${details.quantity}</span>
+            <div class="quantity-controls">
+                <button class="quantity-btn" onclick="updateQuantity('${item}', -1)"><i class="fas fa-minus"></i></button>
+                <span>${details.quantity}</span>
+                <button class="quantity-btn" onclick="updateQuantity('${item}', 1)"><i class="fas fa-plus"></i></button>
+            </div>
+        `;
+        cartItems.appendChild(itemElement);
+        total += details.price * details.quantity;
+    }
+
+    document.getElementById('total-price').textContent = total;
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function updateQuantity(item, change) {
+    if (!cart[item]) return;
+    cart[item].quantity += change;
+    if (cart[item].quantity <= 0) {
+        delete cart[item];
+        showNotification(`${item} removed from cart`);
+    }
+    updateCartDisplay();
+}
+
+// Add to Cart with ripple effect
+document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+        const item = this.getAttribute('data-item');
+        const price = parseInt(this.getAttribute('data-price'));
+        
+        // Create ripple effect
+        const ripple = document.createElement('span');
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s linear';
+        ripple.style.pointerEvents = 'none';
+        
+        // Set ripple position
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = `${size}px`;
+        ripple.style.left = `${event.clientX - rect.left - size/2}px`;
+        ripple.style.top = `${event.clientY - rect.top - size/2}px`;
+        
+        this.appendChild(ripple);
+        
+        // Remove ripple after animation
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+        
+        // Add to cart
+        if (!cart[item]) {
+            cart[item] = { price, quantity: 0 };
         }
+        cart[item].quantity++;
+        updateCartDisplay();
+        
+        // Add pulse animation
+        this.classList.add('pulse');
+        setTimeout(() => this.classList.remove('pulse'), 500);
+        
+        showNotification(`${item} added to cart`);
+    });
+});
 
-        // Notification system
-        function showNotification(message, isError = false) {
-            const notification = document.getElementById('notification');
-            const notificationMessage = document.getElementById('notification-message');
-            
-            notificationMessage.textContent = message;
-            notification.classList.toggle('error', isError);
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
+// Place Order with validation
+document.getElementById('place-order').addEventListener('click', () => {
+    const name = document.getElementById('customer-name').value.trim();
+    const mobile = document.getElementById('mobile-number').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
 
-        // Cart Management
-        let cart = JSON.parse(localStorage.getItem('cart')) || {};
+    // Validate inputs
+    if (!name || !mobile || !email || !address) {
+        showPopup('Please fill all required fields');
+        return;
+    }
 
-        function updateCartDisplay() {
-            const cartItems = document.getElementById('cart-items');
-            cartItems.innerHTML = '';
-            let total = 0;
+    if (!/^\d{10}$/.test(mobile)) {
+        showPopup('Please enter a valid 10-digit mobile number');
+        return;
+    }
 
-            for (const [item, details] of Object.entries(cart)) {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'cart-item';
-                itemElement.innerHTML = `
-                    <span>${item} - ₹${details.price} × ${details.quantity}</span>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn" onclick="updateQuantity('${item}', -1)"><i class="fas fa-minus"></i></button>
-                        <span>${details.quantity}</span>
-                        <button class="quantity-btn" onclick="updateQuantity('${item}', 1)"><i class="fas fa-plus"></i></button>
-                    </div>
-                `;
-                cartItems.appendChild(itemElement);
-                total += details.price * details.quantity;
-            }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+        showPopup('Please enter a valid email address');
+        return;
+    }
 
-            document.getElementById('total-price').textContent = total;
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
+    if (Object.keys(cart).length === 0) {
+        showPopup('Your cart is empty');
+        return;
+    }
 
-        function updateQuantity(item, change) {
-            if (!cart[item]) return;
-            cart[item].quantity += change;
-            if (cart[item].quantity <= 0) {
-                delete cart[item];
-                showNotification(`${item} removed from cart`);
-            }
-            updateCartDisplay();
-        }
+    // Create order details
+    const orderDetails = {
+        customer: { name, mobile, email, address },
+        items: cart,
+        total: parseInt(document.getElementById('total-price').textContent),
+        date: new Date().toLocaleString()
+    };
 
-        // Add to Cart with ripple effect
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function() {
-                const item = this.getAttribute('data-item');
-                const price = parseInt(this.getAttribute('data-price'));
-                
-                // Create ripple effect
-                const ripple = document.createElement('span');
-                ripple.style.position = 'absolute';
-                ripple.style.borderRadius = '50%';
-                ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
-                ripple.style.transform = 'scale(0)';
-                ripple.style.animation = 'ripple 0.6s linear';
-                ripple.style.pointerEvents = 'none';
-                
-                // Set ripple position
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                ripple.style.width = ripple.style.height = `${size}px`;
-                ripple.style.left = `${event.clientX - rect.left - size/2}px`;
-                ripple.style.top = `${event.clientY - rect.top - size/2}px`;
-                
-                this.appendChild(ripple);
-                
-                // Remove ripple after animation
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-                
-                // Add to cart
-                if (!cart[item]) {
-                    cart[item] = { price, quantity: 0 };
+    // Create printable receipt
+    const printWindow = window.open('', '', 'width=600,height=600');
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Kashyap Cafe Order Receipt</title>
+            <style>
+                body { 
+                    font-family: 'Poppins', sans-serif; 
+                    padding: 20px; 
+                    background: #faf4ed;
                 }
-                cart[item].quantity++;
-                updateCartDisplay();
-                
-                // Add pulse animation
-                this.classList.add('pulse');
-                setTimeout(() => this.classList.remove('pulse'), 500);
-                
-                showNotification(`${item} added to cart`);
-            });
-        });
+                h2 { 
+                    color: #ff6b6b; 
+                    text-align: center; 
+                    margin-bottom: 20px;
+                    font-size: 1.8rem;
+                }
+                .details, .items { 
+                    margin: 20px 0; 
+                    background: white; 
+                    padding: 15px; 
+                    border-radius: 10px; 
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                }
+                ul { 
+                    list-style: none; 
+                    padding: 0; 
+                }
+                li { 
+                    padding: 5px 0; 
+                    border-bottom: 1px solid #eee;
+                }
+                .total { 
+                    font-weight: 600; 
+                    font-size: 1.2rem; 
+                    color: #03045e;
+                    text-align: right;
+                }
+                p { 
+                    display: flex; 
+                    align-items: center; 
+                    gap: 10px; 
+                    margin: 10px 0;
+                }
+                .thank-you {
+                    text-align: center;
+                    margin-top: 20px;
+                    font-style: italic;
+                    color: #666;
+                }
+            </style>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        </head>
+        <body>
+            <h2><i class="fas fa-mug-hot"></i> Kashyap Cafe Order Receipt</h2>
+            <div class="details">
+                <p><i class="fas fa-user"></i> <strong>Name:</strong> ${orderDetails.customer.name}</p>
+                <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> ${orderDetails.customer.mobile}</p>
+                <p><i class="fas fa-envelope"></i> <strong>Email:</strong> ${orderDetails.customer.email}</p>
+                <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> ${orderDetails.customer.address}</p>
+            </div>
+            <div class="items">
+                <h3><i class="fas fa-utensils"></i> Items:</h3>
+                <ul>
+                    ${Object.entries(orderDetails.items).map(([item, details]) => 
+                        `<li>${item} - ₹${details.price} × ${details.quantity} = ₹${details.price * details.quantity}</li>`
+                    ).join('')}
+                </ul>
+            </div>
+            <p class="total"><i class="fas fa-rupee-sign"></i> Total: ₹${orderDetails.total}</p>
+            <p><i class="fas fa-clock"></i> Date: ${orderDetails.date}</p>
+            <p class="thank-you">Thank you for your order! Your delicious meal will be delivered soon.</p>
+        </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
 
-        // Place Order with validation
-        document.getElementById('place-order').addEventListener('click', () => {
-            const name = document.getElementById('customer-name').value.trim();
-            const mobile = document.getElementById('mobile-number').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const address = document.getElementById('address').value.trim();
+    // Reset cart and form
+    cart = {};
+    updateCartDisplay();
+    document.querySelectorAll('#customer-details input, #customer-details textarea').forEach(input => input.value = '');
+    
+    showNotification('Order placed successfully! We\'ll deliver your delicious meal soon.');
+});
 
-            // Validate inputs
-            if (!name || !mobile || !email || !address) {
-                showNotification('Please fill all customer details', true);
-                return;
-            }
-
-            if (!/^\d{10}$/.test(mobile)) {
-                showNotification('Please enter a valid 10-digit mobile number', true);
-                return;
-            }
-
-            if (!/\S+@\S+\.\S+/.test(email)) {
-                showNotification('Please enter a valid email address', true);
-                return;
-            }
-
-            if (Object.keys(cart).length === 0) {
-                showNotification('Your cart is empty', true);
-                return;
-            }
-
-            // Create order details
-            const orderDetails = {
-                customer: { name, mobile, email, address },
-                items: cart,
-                total: parseInt(document.getElementById('total-price').textContent),
-                date: new Date().toLocaleString()
-            };
-
-            // Create printable receipt
-            const printWindow = window.open('', '', 'width=600,height=600');
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Kashyap Cafe Order Receipt</title>
-                    <style>
-                        body { 
-                            font-family: 'Poppins', sans-serif; 
-                            padding: 20px; 
-                            background: #faf4ed;
-                        }
-                        h2 { 
-                            color: #ff6b6b; 
-                            text-align: center; 
-                            margin-bottom: 20px;
-                            font-size: 1.8rem;
-                        }
-                        .details, .items { 
-                            margin: 20px 0; 
-                            background: white; 
-                            padding: 15px; 
-                            border-radius: 10px; 
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                        }
-                        ul { 
-                            list-style: none; 
-                            padding: 0; 
-                        }
-                        li { 
-                            padding: 5px 0; 
-                            border-bottom: 1px solid #eee;
-                        }
-                        .total { 
-                            font-weight: 600; 
-                            font-size: 1.2rem; 
-                            color: #03045e;
-                            text-align: right;
-                        }
-                        p { 
-                            display: flex; 
-                            align-items: center; 
-                            gap: 10px; 
-                            margin: 10px 0;
-                        }
-                        .thank-you {
-                            text-align: center;
-                            margin-top: 20px;
-                            font-style: italic;
-                            color: #666;
-                        }
-                    </style>
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-                </head>
-                <body>
-                    <h2><i class="fas fa-mug-hot"></i> Kashyap Cafe Order Receipt</h2>
-                    <div class="details">
-                        <p><i class="fas fa-user"></i> <strong>Name:</strong> ${orderDetails.customer.name}</p>
-                        <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> ${orderDetails.customer.mobile}</p>
-                        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> ${orderDetails.customer.email}</p>
-                        <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> ${orderDetails.customer.address}</p>
-                    </div>
-                    <div class="items">
-                        <h3><i class="fas fa-utensils"></i> Items:</h3>
-                        <ul>
-                            ${Object.entries(orderDetails.items).map(([item, details]) => 
-                                `<li>${item} - ₹${details.price} × ${details.quantity} = ₹${details.price * details.quantity}</li>`
-                            ).join('')}
-                        </ul>
-                    </div>
-                    <p class="total"><i class="fas fa-rupee-sign"></i> Total: ₹${orderDetails.total}</p>
-                    <p><i class="fas fa-clock"></i> Date: ${orderDetails.date}</p>
-                    <p class="thank-you">Thank you for your order! Your delicious meal will be delivered soon.</p>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
-
-            // Reset cart and form
+// Clear Cart
+document.getElementById('clear-cart').addEventListener('click', () => {
+    if (Object.keys(cart).length > 0) {
+        if (confirm('Are you sure you want to clear your cart?')) {
             cart = {};
             updateCartDisplay();
-            document.querySelectorAll('#customer-details input, #customer-details textarea').forEach(input => input.value = '');
-            
-            showNotification('Order placed successfully! We\'ll deliver your delicious meal soon.');
-        });
+            showNotification('Cart cleared successfully!');
+        }
+    } else {
+        showNotification('Your cart is already empty!', true);
+    }
+});
 
-        // Clear Cart
-        document.getElementById('clear-cart').addEventListener('click', () => {
-            if (Object.keys(cart).length > 0) {
-                if (confirm('Are you sure you want to clear your cart?')) {
-                    cart = {};
-                    updateCartDisplay();
-                    showNotification('Cart cleared successfully!');
-                }
-            } else {
-                showNotification('Your cart is already empty!', true);
-            }
-        });
-
-        // Initial Setup
-        document.addEventListener('DOMContentLoaded', () => {
-            showSection('home');
-            updateCartDisplay();
-            
-            // Add animation to menu items when page loads if on menu section
-            if (window.location.hash === '#menu') {
-                showSection('menu');
-            }
-        });
+// Initial Setup
+document.addEventListener('DOMContentLoaded', () => {
+    showSection('home');
+    updateCartDisplay();
+    
+    // Add animation to menu items when page loads if on menu section
+    if (window.location.hash === '#menu') {
+        showSection('menu');
+    }
+});
     </script>
 </body>
 </html>
